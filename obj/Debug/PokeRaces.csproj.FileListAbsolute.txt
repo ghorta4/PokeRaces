@@ -1,0 +1,8 @@
+C:\Program Files (x86)\Steam\steamapps\common\Elin\Package\PokeRaces\package.xml
+C:\Program Files (x86)\Steam\steamapps\common\Elin\Package\PokeRaces\PokeRaces.dll
+C:\Program Files (x86)\Steam\steamapps\common\Elin\Package\PokeRaces\PokeRaces.pdb
+C:\Users\Isopropyl Palmitate\Documents\Modding Tools\Elin\BepInEx\Mods\PokeRaces\obj\Debug\PokeRaces.csproj.AssemblyReference.cache
+C:\Users\Isopropyl Palmitate\Documents\Modding Tools\Elin\BepInEx\Mods\PokeRaces\obj\Debug\PokeRaces.csproj.CoreCompileInputs.cache
+C:\Users\Isopropyl Palmitate\Documents\Modding Tools\Elin\BepInEx\Mods\PokeRaces\obj\Debug\PokeRaces.dll
+C:\Users\Isopropyl Palmitate\Documents\Modding Tools\Elin\BepInEx\Mods\PokeRaces\obj\Debug\PokeRaces.pdb
+C:\Users\Isopropyl Palmitate\Documents\Modding Tools\Elin\BepInEx\Mods\PokeRaces\obj\Debug\PokeRaces.csproj.Up2Date

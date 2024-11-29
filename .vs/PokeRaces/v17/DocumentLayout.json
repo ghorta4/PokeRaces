@@ -1,0 +1,140 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\actions\\basemove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:actions\\basemove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\pokemoninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:pokemoninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\actions\\evolvingstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:actions\\evolvingstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\actions\\specificstates\\delayedmove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:actions\\specificstates\\delayedmove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\vhsmainpr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:vhsmainpr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\damagefunctionpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:damagefunctionpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|c:\\users\\isopropyl palmitate\\documents\\modding tools\\elin\\bepinex\\mods\\pokeraces\\actions\\statchangestates\\pokemonstatcon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}|PokeRaces.csproj|solutionrelative:actions\\statchangestates\\pokemonstatcon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VHSMainPR.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\VHSMainPR.cs",
+              "RelativeDocumentMoniker": "VHSMainPR.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\VHSMainPR.cs",
+              "RelativeToolTip": "VHSMainPR.cs",
+              "ViewState": "AQIAAKIAAAAAAAAAAAAAALsAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-23T07:25:54.625Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EvolvingState.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\EvolvingState.cs",
+              "RelativeDocumentMoniker": "Actions\\EvolvingState.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\EvolvingState.cs",
+              "RelativeToolTip": "Actions\\EvolvingState.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAFIAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T08:25:58.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DelayedMove.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\SpecificStates\\DelayedMove.cs",
+              "RelativeDocumentMoniker": "Actions\\SpecificStates\\DelayedMove.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\SpecificStates\\DelayedMove.cs",
+              "RelativeToolTip": "Actions\\SpecificStates\\DelayedMove.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T07:39:17.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PokemonStatCon.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\StatChangeStates\\PokemonStatCon.cs",
+              "RelativeDocumentMoniker": "Actions\\StatChangeStates\\PokemonStatCon.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\StatChangeStates\\PokemonStatCon.cs",
+              "RelativeToolTip": "Actions\\StatChangeStates\\PokemonStatCon.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T02:22:54.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PokemonInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\PokemonInfo.cs",
+              "RelativeDocumentMoniker": "PokemonInfo.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\PokemonInfo.cs",
+              "RelativeToolTip": "PokemonInfo.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAiwDEAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T01:35:49.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BaseMove.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\BaseMove.cs",
+              "RelativeDocumentMoniker": "Actions\\BaseMove.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\Actions\\BaseMove.cs",
+              "RelativeToolTip": "Actions\\BaseMove.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAiwDkAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T06:13:39.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DamageFunctionPatch.cs",
+              "DocumentMoniker": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\DamageFunctionPatch.cs",
+              "RelativeDocumentMoniker": "DamageFunctionPatch.cs",
+              "ToolTip": "C:\\Users\\Isopropyl Palmitate\\Documents\\Modding Tools\\Elin\\BepInEx\\Mods\\PokeRaces\\DamageFunctionPatch.cs",
+              "RelativeToolTip": "DamageFunctionPatch.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAD8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-28T20:37:59.581Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4A65E54-3F33-4840-BFA2-D11AD8A9BC81}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PokeRaces</RootNamespace>
+    <AssemblyName>PokeRaces</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Elin\Package\PokeRaces\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.Core">
+      <HintPath>..\..\BepInEx.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.Unity">
+      <HintPath>..\..\BepInEx.Unity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Elin">
+      <HintPath>..\..\..\Elin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugins.ActorSystem">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Plugins.ActorSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugins.BaseCore">
+      <HintPath>..\..\..\Plugins.BaseCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Plugins.Sound">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Plugins.Sound.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugins.UI">
+      <HintPath>..\..\..\Plugins.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Reflex">
+      <HintPath>..\..\..\Reflex.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\ActEvolve.cs" />
+    <Compile Include="Actions\BaseMove.cs" />
+    <Compile Include="Actions\PokeDice.cs" />
+    <Compile Include="Actions\SpecificStates\DelayedMove.cs" />
+    <Compile Include="Actions\SpecificStates\WorriedInsomnia.cs" />
+    <Compile Include="Actions\SpecificStates\LeechSeed.cs" />
+    <Compile Include="Actions\StatChangeStates\SpDefenseMod.cs" />
+    <Compile Include="Actions\StatChangeStates\DefenseMod.cs" />
+    <Compile Include="Actions\StatChangeStates\SpAttackMod.cs" />
+    <Compile Include="Actions\StatChangeStates\AttackMod.cs" />
+    <Compile Include="DamageFunctionPatch.cs" />
+    <Compile Include="Actions\EvolvingState.cs" />
+    <Compile Include="Actions\Moves\Tackle.cs" />
+    <Compile Include="Actions\StatChangeStates\PokemonStatCon.cs" />
+    <Compile Include="CustomEffects.cs" />
+    <Compile Include="SharedPokemonPCC.cs" />
+    <Compile Include="SourcePokemon.cs" />
+    <Compile Include="PokemonInfo.cs" />
+    <Compile Include="VHSMainPR.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="package.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+	<title>Additional Pokemon Races</title>
+	<id>VHSPokemonRaces</id>
+	<author>DoYouSellVHS</author>
+	<builtin>false</builtin>
+	<loadPriority>1</loadPriority>
+	<version>0.23.17</version>
+	<description>
+		Adds a few Pokemon races to character creation.
+	</description>
+</Meta>
