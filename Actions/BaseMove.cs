@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ using static ActPlan;
 using static System.Net.Mime.MediaTypeNames;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
+using static Weather;
 
 public class PokemonMove : Act
 {
@@ -27,6 +29,8 @@ public class PokemonMove : Act
                 case "EnemiesInRange":
                 case "TilesInRange":
                     return TargetType.Any;
+                case "Single":
+                    return TargetType.SelfAndNeighbor;
                 default:
                     return TargetType.SelfAndNeighbor;
             }
@@ -45,30 +49,44 @@ public class PokemonMove : Act
 
     public override bool Perform() //Perform will come with some base properties that helps make really generic moves.
     {
+        Chara me;
+        if (owner != null)
+        {
+            me = owner.Chara;
+        }
+        else
+        {
+            me = CC;
+        }
         if (TargetType.Range == TargetRange.Self && !forcePt)
         {
-            TC = owner.Chara;
-            TP.Set(owner.Chara.pos);
+            TC = me;
+            TP.Set(me.pos);
         }
-
-        string text = source.aliasRef.IsEmpty(owner.Chara.MainElement.source.alias);
-
-        int power2 = owner.Chara.elements.GetOrCreateElement(source.id).GetPower(owner.Chara) * powerMod / 100;
-
+        string text = source.aliasRef.IsEmpty(me.MainElement.source.alias);
+        int power2 = me.elements.GetOrCreateElement(source.id).GetPower(me) * powerMod / 100;
         bool isMiss = rnd(100) > source.encFactor;
-
         if (isMiss)
         {
-            owner.Chara.PlayEffect("fizzle");
-            owner.Chara.PlaySound("fizzle");
-            owner.Chara.Say("fizzle", owner.Chara);
+            me.PlayEffect("fizzle");
+            me.PlaySound("fizzle");
+            me.Say("The attack missed!", me);
             return true;
+        }
+        else
+        {
+            me.Say(me.Name + " used " + source.name + "!");
+        }
+        //STAB bonus
+        bool getsStab = me.HasElement(source.aliasRef);
+        if (getsStab)
+        {
+            power2 = Mathf.RoundToInt(1.5f * power2);
         }
 
         bool isPhysical = source.tag.Contains("phys");
         bool isSpecial = source.tag.Contains("spcl");
-
-        foreach (Condition c in owner.Chara.conditions)
+        foreach (Condition c in me.conditions)
         {
             if (c is PokeAttackMod && isPhysical)
             {
@@ -81,15 +99,14 @@ public class PokemonMove : Act
                 power2 = Mathf.RoundToInt((float)(PokemonStatCon.ConvertAttackLevelToDamageMultiplier(c.power) * power2));
             }
         }
-
         if (source.tag.Contains("delay"))
         {
-            ConDelayedMove applied = (ConDelayedMove)owner.Chara.AddCondition("ConDelayedMove", GetPower(owner.Chara));
+            ConDelayedMove applied = (ConDelayedMove)me.AddCondition("ConDelayedMove", GetPower(me));
             applied.power = power2;
             applied.text = text;
             applied.moveToUse = id;
             Effect effect = Effect.Get("cast");
-            effect.Play(owner.Chara.pos);
+            effect.Play(me.pos);
         }
         else
         {
@@ -100,7 +117,7 @@ public class PokemonMove : Act
 
     public void CallProc(int power2, string text)
     {
-        CustomProc(source.proc[0].ToEnum<PokemonProcEffects>(), power2, BlessedState.Normal, owner.Chara, TC, TP, source.tag.Contains("neg"), new ActRef
+        CustomProc(source.proc[0].ToEnum<PokemonProcEffects>(), power2, BlessedState.Normal, CC, TC, TP, source.tag.Contains("neg"), new ActRef
         {
             n1 = source.proc.TryGet(1, returnNull: true),
             aliasEle = text,
@@ -110,7 +127,7 @@ public class PokemonMove : Act
 
     public override int GetPower(Card c)
     {
-        float a = Value * source.cost[0] + source.lvFactor;
+        float a = Value * (source.cost[0] + 1) * 2 + source.lvFactor;
 
         a *= c.Evalue(65000) * 0.01f + 1; //move use level bonus
         //  a = EClass.curve(a, 400, 100);
@@ -227,7 +244,8 @@ public class PokemonMove : Act
 
                 foreach (Chara targ in chars)
                 {
-                    if ((isEnemyOnly && !targ.IsHostile(pc) || targ == CC))
+                    Debug.Log(targ.hostility);
+                    if ((isEnemyOnly && !targ.IsHostile(CC)) || targ == CC)
                     {
                         continue;
                     }
@@ -263,7 +281,12 @@ public class PokemonMove : Act
         }
         if (!hit)
         {
-            CC.Say("spell_hand_miss", CC, element.Name.ToLower());
+            CC.Say("But it missed...", CC, element.Name.ToLower());
+        }
+        else //manually give exp because it doesn't automatically happen for free skills. and, uh, pokemon kinda need it
+        {
+            CC.ModExp(source.id, 1 + source.cost[0]); //this skill
+            CC.ModExp(65000, 1 + source.cost[0]); //move use
         }
 
         foreach (string tag in source.tag)
@@ -403,11 +426,11 @@ public class PokemonMove : Act
                     {
                         string[] list2 = Lang.GetList("attack" + (CC.isChara ? CC.Chara.race.meleeStyle.IsEmpty("Touch") : "Touch"));
                         string @ref = "_elehand".lang(e.source.GetAltname(2), list2[4]);
-                        CC.Say(c.IsPCParty ? "cast_hand_ally" : "cast_hand", CC, c, @ref, c.IsPCParty ? list2[1] : list2[2]);
+                        //CC.Say(c.IsPCParty ? "cast_hand_ally" : "cast_hand", CC, c, @ref, c.IsPCParty ? list2[1] : list2[2]);
                     }
                     else
                     {
-                        CC.Say(lang + "_hit", CC, c, e.Name.ToLower());
+                      //  CC.Say(lang + "_hit", CC, c, e.Name.ToLower());
                     }
                 }
 
@@ -499,11 +522,23 @@ public class PokemonMove : Act
 
                 //duration skill bonus
                 int durationBonus = Value;
-                Condition alreadyHasCondition = owner.Chara.GetCondition<PokeAttackMod>();
-                if (alreadyHasCondition != null)
+               // Condition alreadyHasCondition = null;// CC.GetCondition<newCondition.GetType()>();
+
+                for (int i = 0; i < target.Chara.conditions.Count; i++)
                 {
-                    durationBonus /= Mathf.Abs(alreadyHasCondition.power);
+                    var lookedAtCon = target.Chara.conditions[i];
+                    if (lookedAtCon.source.alias == newCondition.source.alias)
+                    {
+                        durationBonus /= Mathf.Abs(lookedAtCon.power);
+                        break;
+                    }
                 }
+
+
+               // if (alreadyHasCondition != null)
+             //   {
+              //      durationBonus /= Mathf.Abs(alreadyHasCondition.power);
+              //  }
                 newCondition.value = 60 + durationBonus * 2;
                 targetChar.AddCondition(newCondition, true);
                 didItWork = true;
@@ -527,52 +562,79 @@ public class PokemonMove : Act
             {
                 string[] outs = tag.Split('/');
                 Effect effect = null;
-                if (outs[1] == "Poison")
+
+                if (outs.Length > 2)
                 {
-                    Condition applied = targetChar.AddCondition("ConPoison", GetPower(owner.Chara));
+                    int chance = int.Parse(outs[2]);
 
-                    if (applied != null)
-                    {
-                        didItWork = true;
-                    }
-
-                    effect = Effect.Get("Element/ball_Poison");
-                    effect.Play(target.pos);
+                    if (Rand.Range(0, 100) > chance) continue;
                 }
+
+                float powerMod = 1f;
+                if (outs.Length > 3)
+                {
+                    powerMod = float.Parse(outs[3]);
+                }
+
+                int totalPower = Mathf.RoundToInt(powerMod * GetPower(CC));
+
+                string statusName = "";
+                string effectName = "";
+                switch (outs[1])
+                {
+                    case "Poison":
+                        statusName = "ConPoison";
+                        effectName = "Element/ball_Poison";
+                        break;
+                    case "Sleep":
+                        statusName = "ConSleep";
+                        effectName = "smoke";
+                        break;
+                    case "Insomnia":
+                        statusName = "ConInsomnia";
+                        effectName = "smoke";
+                        break;
+                    case "Burn":
+                        statusName = "ConBurning";
+                        effectName = "Element/ball_Fire";
+                        break;
+                    case "Blind":
+                        statusName = "ConBlind";
+                        effectName = "Element/ball_Chaos";
+                        break;
+                    case "Paralysis":
+                        statusName = "ConParalyze";
+                        effectName = "eleLightning";
+                        break;
+                    case "Fear":
+                        statusName = "ConFear";
+                        effectName = "eleSound";
+                        break;
+                }
+
                 if (outs[1] == "LeechSeed")
                 {
-                    ConLeechSeed applied = (ConLeechSeed) targetChar.AddCondition("ConLeechSeed", GetPower(owner.Chara));
+                    ConLeechSeed applied2 = (ConLeechSeed)targetChar.AddCondition("ConLeechSeed", totalPower);
 
-                    if (applied != null)
+                    if (applied2 != null)
                     {
                         didItWork = true;
-                        applied.targetToHealID = owner.Chara.uid;
+                        applied2.targetToHealID = CC.uid;
                     }
                     effect = Effect.Get("Element/ball_Acid");
                     effect.Play(target.pos);
+                    continue;
                 }
-                if (outs[1] == "Sleep")
-                {
-                    Condition applied = targetChar.AddCondition("ConSleep", GetPower(owner.Chara));
 
-                    if (applied != null)
-                    {
-                        didItWork = true;
-                    }
-                    effect = Effect.Get("smoke");
-                    effect.Play(target.pos);
-                }
-                if (outs[1] == "Insomnia")
-                {
-                    Condition applied = targetChar.AddCondition("ConInsomnia", GetPower(owner.Chara) * 3);
+                Condition applied = targetChar.AddCondition(statusName, totalPower);
 
-                    if (applied != null)
-                    {
-                        didItWork = true;
-                    }
-                    effect = Effect.Get("smoke");
-                    effect.Play(target.pos);
+                if (applied != null)
+                {
+                    didItWork = true;
                 }
+                effect = Effect.Get(effectName);
+                effect.Play(target.pos);
+
             }
         }
 
@@ -581,7 +643,7 @@ public class PokemonMove : Act
 
     PokeDice GetDice(int power)
     {
-        return new PokeDice { num = 1, sides = Mathf.RoundToInt(power * 0.15f), bonus = Mathf.RoundToInt(power * .85f), card = owner.Chara };
+        return new PokeDice { num = 1, sides = Mathf.RoundToInt(power * 0.15f), bonus = Mathf.RoundToInt(power * .85f), card = CC };
     }
 
     enum WeatherType

@@ -4,6 +4,7 @@ using HarmonyLib;
 using System.IO;
 using PokeRaces;
 using System;
+using static UnityEngine.UI.GridLayoutGroup;
 
 
 [BepInPlugin("PokeRaces", "PokeRaces", "1.0.0.0")]
@@ -26,8 +27,8 @@ public class PokeRacesCore : BaseUnityPlugin
 
         ClassCache.caches.Create<ActEvolve>("ActEvolve", "PokeRaces");
 
-        //   ModUtil.ImportExcel(excel, "Chara", sources.charas);
-        //   ModUtil.ImportExcel(excel, "CharaText", sources.charaText);
+        ModUtil.ImportExcel(excel, "Chara", sources.charas);
+        ModUtil.ImportExcel(excel, "CharaText", sources.charaText);
 
         ModUtil.ImportExcel(excel, "Elements", sources.elements);
         ModUtil.ImportExcel(excel, "Race", sources.races);
@@ -74,109 +75,55 @@ class PokeTextureOverride{
     }
 }
 
-[HarmonyPatch(typeof(Chara), nameof(Chara.OnCreate))]
-class PokeTextureOverride2
+/*[HarmonyPatch(typeof(CharaActorPCC), nameof(CharaActorPCC.RefreshSprite))]
+class PokeTextureLoadFix
 {
-    //Changes sprites to instead use ones based on race instad.
-    static void Prefix(Chara __instance)
+    static void Prefix(CharaActorPCC __instance)
     {
-        var isPokemon = __instance.race.tag.Contains("pokemon");
-
-        if(isPokemon)
+        var chara = __instance.owner;
+        var isPokemon = chara.race.tag.Contains("pokemon");
+        if (isPokemon && !__instance.pcc.isBuilt)
         {
-            SharedPokemonSprites.TryApplyPokemonSprites(__instance);
-            PokemonDatabase.TeachPokemonLevelupMoves(__instance);
-        }
-    }
-}
-
-[HarmonyPatch(typeof(Chara), nameof(Chara.ChangeRace))]
-class PokeTextureOverride4
-{
-    //Changes sprites to instead use ones based on race instad.
-    static void Postfix(Chara __instance)
-    {
-        var character = __instance;
-        var isPokemon = character.race.tag.Contains("pokemon");
-        if (isPokemon)
-        {
-            SharedPokemonSprites.TryApplyPokemonSprites(character);
-        }
-    }
-}
-
-[HarmonyPatch(typeof(UICharaMaker), nameof(UICharaMaker.Refresh))] //Updates char editor with new player sprites.
-class PlayerRaceChangeSpriteUpdate
-{
-    //Changes sprites to instead use ones based on race instad.
-    static void Postfix(UICharaMaker __instance)
-    {
-        __instance.portrait.SetChara(__instance.chara);
-    }
-}
-//used to map the effects of Pokemon moves without changing their elements. Until I make custom ffx for them, of course...
-/*[HarmonyPatch(typeof(Effect), nameof(Effect.Get) ,new Type[] { typeof(string) })]
-class EffectStyleOverride
-{
-    //Changes sprites to instead use ones based on race instad.
-    static void Prefix(ref string id)
-    {
-        switch (id)
-        {
-            case "pTypeNormal":
-                id = "eleImpact";
-                break;
-            case "pTypeGrass":
-                id = "eleAcid";
-                break;
-            case "pTypePoison":
-                id = "elePoison";
-                break;
+            //Late build for PCC in case something spawns without it.
+            if (__instance.pcc == null)
+            {
+                __instance.pcc = PCC.Get((chara.renderer as CharaRenderer).pccData);
+                SharedPokemonSprites.TryApplyPokemonSprites(chara);
+            }
+            if(!__instance.pcc.isBuilt)
+            {
+                __instance.pcc.Build();
+            }
         }
     }
 }*/
 
-//testomg
-[HarmonyPatch(typeof(EffectManager.EffectList), nameof(EffectManager.EffectList.Get))]
-class EffectStyleOverride
+/*[HarmonyPatch(typeof(SpriteVariation), nameof(SpriteVariation.Kill))]
+class AntiPokeTextureKill
 {
-    //Changes sprites to instead use ones based on race instad.
-    static void Prefix(ref string id)
+    static void Prefix(SpriteVariation __instance)
     {
-        id = id.Replace("peNormal", "Sound");
-        id = id.Replace("peGrass", "Acid");
-        id = id.Replace("pePoison", "Poison");
+        Debug.LogWarning("tex was killed: " + __instance.tex.name);
+    }
+}*/
+
+
+
+[HarmonyPatch(typeof(Card), nameof(Card.ResistLvFrom))]
+class AIResistDetectionOverride //Fix resistance detection.
+{
+    static bool Prefix(ref int ele, ref int __result)
+    {
+        ele = PokemonDatabase.ConvertPokemonTypeToBaseDamageType(ele);
+        if (ele == 0)
+        {
+            __result = 0;
+            return false;
+        }
+        return true;
     }
 }
 
-//Below is the hook used so we can force a variation load.
-[HarmonyPatch(typeof(PCC), nameof(PCC.Get))]
-class PokeTextureOverride3
-{
-    //Changes sprites to instead use ones based on race instad.
-    static void Postfix(ref PCC __result)
-    {
-        if (__result.data == null) return;
-
-        var isPokemon = __result.data.map.ContainsKey("pokemon");
-
-        if (isPokemon == false) return;
-
-        var pokemonName = __result.data.map["pokemon"][0];
-
-        if (__result.variation == null) { __result.Build(true); }
-
-        var doNotChange = __result.variation == null || __result.variation.tex.name == pokemonName; // avoid infinite loops AND make things a teeny bit more efficient!
-        if (doNotChange) return;
-
-        Debug.Log("Overloading PCC with pokemon sprites.");
-
-        if (__result.variation == null) return;
-
-        SharedPokemonSprites.ApplyPokemonSpritesToVariation(__result.variation, pokemonName);
-        __result.Build(); //rebuild to push the new sprites
-    }
-}
 
 [HarmonyPatch(typeof(Chara), nameof(Chara.OnSleep), new Type[] { typeof(int), typeof(int) })]
 class LevelupCheck

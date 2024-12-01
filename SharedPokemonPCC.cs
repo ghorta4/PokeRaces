@@ -48,25 +48,20 @@ namespace PokeRaces
 
         public static void TryApplyPokemonSprites(Chara __instance)
         {
-            PCCData pccData = __instance.pccData;
-            if (pccData == null)
+            if (!__instance.IsPCC)
             {
                 return;
             }
+            PCCData pccData = __instance.pccData;
             if (__instance.race.tag != null && __instance.race.tag.Contains("pokemon"))
             {
                 string pokemonName = __instance.race.id;
-                
                 var pcc = PCC.Get(pccData);
                 pccData.map["pokemon"] = new string[] {pokemonName};
                 if (pcc == null) return;
-
                 var variation = pcc.variation;
-
-                if (variation == null) return;
-
-                ApplyPokemonSpritesToVariation(pcc.variation, pokemonName);
-                
+                if (variation == null) ApplyPokemonVariation(pcc);
+                ApplyPokemonSpritesToVariation(pcc.variation, pokemonName, __instance.IsPC);
                 pcc.Build();
             }
             else
@@ -89,7 +84,7 @@ namespace PokeRaces
             }
         }
 
-        public static void ApplyPokemonSpritesToVariation(SpriteVariation variation, string pokemonName)
+        public static void ApplyPokemonSpritesToVariation(SpriteVariation variation, string pokemonName, bool makeNew)
         {
             var targetSet = pokemon_sprite_library[pokemonName];
 
@@ -100,13 +95,37 @@ namespace PokeRaces
 
             SpriteVariationManager.current.baseSize /= PokemonDatabase.GetPokemonInfoForSpecies(pokemonName).spriteScale;
 
-            variation.pivot = new Vector2(0.5f, 0.1f); //this pivot looks better for these sprites than the default one does.
+            variation.pivot = new Vector2(0.5f, 0.2f); //this pivot looks better for these sprites than the default one does.
 
             variation.tex = targetSet;
+
+            if (makeNew) //This section prevents crashes bc something about both players and enemies having the same texture causes em to delete it
+            {
+                variation.tex = new Texture2D(targetSet.width, targetSet.height);
+                variation.tex.SetPixels(targetSet.GetPixels());
+                variation.tex.Apply();
+            }
+
             variation.loopType = SpriteVariation.LoopType.restart;
             variation.BuildSprites(variation.tex);
 
             SpriteVariationManager.current.baseSize = oldSize;
+        }
+
+        static void ApplyPokemonVariation(PCC pcc)
+        {
+            string text = "walk";
+            PCC.Part part = PCC.pccm.GetDefaultBodySet().map["body"].GetDefaultPart();
+            ModItem<Texture2D> modItem = part.modTextures.TryGetValue(text);
+            SpriteVariation v = new SpriteVariation(modItem, modItem.id, text, "PCC");
+            v.Build(false);
+            pcc.layerList = new PCC.LayerList
+            {
+                idAnime = text,
+                pcc = pcc,
+                baseSet = part.bodySet
+            };
+            pcc.variation = v;
         }
     }
 }

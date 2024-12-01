@@ -92,6 +92,7 @@
     <Compile Include="Actions\ActEvolve.cs" />
     <Compile Include="Actions\BaseMove.cs" />
     <Compile Include="Actions\PokeDice.cs" />
+    <Compile Include="Actions\PokeGraphicsFixes.cs" />
     <Compile Include="Actions\SpecificStates\DelayedMove.cs" />
     <Compile Include="Actions\SpecificStates\WorriedInsomnia.cs" />
     <Compile Include="Actions\SpecificStates\LeechSeed.cs" />
@@ -99,11 +100,13 @@
     <Compile Include="Actions\StatChangeStates\DefenseMod.cs" />
     <Compile Include="Actions\StatChangeStates\SpAttackMod.cs" />
     <Compile Include="Actions\StatChangeStates\AttackMod.cs" />
+    <Compile Include="Actions\StatChangeStates\SpeedMod.cs" />
     <Compile Include="DamageFunctionPatch.cs" />
     <Compile Include="Actions\EvolvingState.cs" />
     <Compile Include="Actions\Moves\Tackle.cs" />
     <Compile Include="Actions\StatChangeStates\PokemonStatCon.cs" />
     <Compile Include="CustomEffects.cs" />
+    <Compile Include="PokemonCombatAI.cs" />
     <Compile Include="SharedPokemonPCC.cs" />
     <Compile Include="SourcePokemon.cs" />
     <Compile Include="PokemonInfo.cs" />

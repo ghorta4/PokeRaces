@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using UnityEngine;
 
 public static class PokemonDatabase
@@ -19,17 +20,15 @@ public static class PokemonDatabase
         return null;
     }
 
-    public static void TeachPokemonLevelupMoves(Chara referenceChar)
+    public static void TeachPokemonLevelupMoves(Chara referenceChar, bool silent = false)
     {
         if (referenceChar == null || referenceChar.race == null || referenceChar.race.tag == null) return;
         if (!referenceChar.race.tag.Contains("pokemon")) return;
         int level = referenceChar.Evalue(65000);
-
         var PokemonInfo = GetPokemonInfoForSpecies(referenceChar.race.id);
         List<int> skillsToKnow = new List<int>();
 
         if ( PokemonInfo.evolveLevel > 0 && level > PokemonInfo.evolveLevel) { skillsToKnow.Add(62020); } //Adds evolution at the right level.
-
         foreach (var set in PokemonInfo.levelUpMoves)
         {
             string[] split = set.Split('/');
@@ -39,16 +38,24 @@ public static class PokemonDatabase
             {
                 skillsToKnow.Add(EClass.sources.elements.alias[moveName].id);
             }
-
-            
         }
-
-        foreach(var skill in skillsToKnow)
+        foreach (var skill in skillsToKnow)
         {
             bool alreadyHasAbility = referenceChar.HasElement(skill);
             if (alreadyHasAbility == false)
             {
-                referenceChar.GainAbility(skill);
+                if (silent)
+                {
+                    Element orCreateElement = referenceChar.elements.GetOrCreateElement(skill);
+                    if (orCreateElement.ValueWithoutLink == 0)
+                    {
+                        referenceChar.elements.ModBase(orCreateElement.id, 1);
+                    }
+                }
+                else
+                {
+                    referenceChar.GainAbility(skill);
+                }
             }
         }
     }

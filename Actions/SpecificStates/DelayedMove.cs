@@ -16,7 +16,10 @@ public class ConDelayedMove : BaseDebuff
         if(toUse != null)
         {
             PokemonMove move = (PokemonMove)toUse;
+            Chara oldCC = Act.CC;
+            Act.CC = owner;
             move.CallProc(power, text);
+            Act.CC = oldCC;
         }
     }
 }
